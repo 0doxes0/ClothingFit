@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Clothing Fit Tool",
-    "author": "Your Name",
+    "author": "Doxes",
     "version": (1, 0),
     "blender": (2, 80, 0),
     "location": "View3D > Sidebar > Clothing Fit Tool",
