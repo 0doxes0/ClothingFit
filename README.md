@@ -79,5 +79,5 @@ The tool adjusts clothing mesh vertices to an ideal distance from the character 
 
 ## Additional Notes
 
-- This tool, including this README, was created with significant AI assistance
+- This tool, including this README, was created with AI assistance
 - This is a temporary solution to accelerate clothing fitting. Looking forward to the completion of automatic clothing fitting tools for Unity being developed by talented individuals.
