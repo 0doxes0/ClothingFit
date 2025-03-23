@@ -1,79 +1,83 @@
 # Clothing Fit Tool for Blender
 
-这是一个简单的个人用于Blender的衣物适配工具插件，为加速3D模型的衣物适配过程设计。本工具能够让已经在形状和结构上贴近角色的衣服进一步贴身，同时保留大体形状和褶皱细节。如果你正在苦恼这些问题，并且从来没有使用过相关工具，那么可以试试。
+[![en](https://img.shields.io/badge/lang-English-blue.svg)](README.md)
+[![cn](https://img.shields.io/badge/语言-中文-red.svg)](README.zh-CN.md)
+[![jp](https://img.shields.io/badge/言語-日本語-white.svg)](README.ja.md)
 
-## 功能介绍
+A simple Blender add-on designed to accelerate the process of fitting clothing to 3D character models. This tool helps create a snug fit for garments that are already close to a character's shape, while preserving overall form and wrinkle details. If you're struggling with clothing fit and haven't used specialized tools before, this might be worth trying.
 
-该工具使用各种投影方法将衣物网格顶点调整到人物模型表面的指定距离，主要提供以下功能：
+## Features
 
-- 多种投影方式：从中心点、顶点法线、最近点和混合方法
-- 可调节的柔性范围和衰减函数
-- 自动检测和修复穿模顶点
-- 交互式顶点选择功能
-- 支持部分区域精细调整
+The tool adjusts clothing mesh vertices to an ideal distance from the character model's surface using various projection methods:
 
-## 安装方法
+- Multiple projection types: from center point, vertex normals, nearest point, and mixed methods
+- Adjustable influence range and falloff functions
+- Automatic detection and fixing of intersecting vertices
+- Interactive vertex selection
+- Support for fine adjustments in specific areas
 
-1. 下载 `clothing_fit_tool.py` 文件
-2. 在Blender中打开 `编辑 > 偏好设置 > 插件 > 安装...`
-3. 选择下载的py文件
-4. 启用插件
+## Installation
 
-## 使用指南
+1. Download the `clothing_fit_tool.py` file
+2. In Blender, navigate to `Edit > Preferences > Add-ons > Install...`
+3. Select the downloaded py file
+4. Enable the add-on
 
-### 基本使用流程
+## Usage Guide
 
-1. 在3D视图侧边栏中找到 "Clothing Fit Tool" 面板
-2. 选择衣物对象和人物身体对象
-3. 调整参数（柔性范围、衰减类型、理想距离等）
-4. 进入编辑模式并选择要适配的顶点（因为N^2的复杂度，不建议全选，请根据需要选择一些参考点，比如衣服外边沿，附近的点会被Soft Range带动）
-5. 点击 "Apply Clothing Fit" 按钮应用适配
+### Basic Workflow
 
-### 参数说明
+1. Find the "Clothing Fit Tool" panel in the 3D View sidebar
+2. Select the clothing object and character body object
+3. Adjust parameters (soft range, falloff type, ideal distance, etc.)
+4. Enter Edit Mode and select vertices to fit (Due to N² complexity, select reference points rather than all vertices - e.g., garment edges - nearby points will follow based on Soft Range)
+5. Click "Apply Clothing Fit" to apply the adjustments
 
-- **Clothing Object**: 需要适配的衣物网格
-- **Body Object**: 人物身体网格
-- **Soft Range**: 影响范围，决定选中点周围多大范围的顶点会被带动变形
-- **Falloff Type**: 影响衰减类型（线性、二次方、指数等，推荐使用cos，最平滑）
-- **Ideal Distance**: 衣物与身体之间的目标距离
-- **Projection Type**: 投影计算方式
-  - **From Center**: 从中心点投影（可能导致塌陷）
-  - **Vertex Normal**: 沿顶点法线投影（自动过滤不良法线）
-  - **Nearest Point**: 寻找身体网格上最近的点
-  - **Mixed Method**: 组合多种投影方法（可能导致塌陷）
-- **Ray Offset**: 射线起点沿法线方向的偏移距离
+### Parameter Explanation
 
-### 一些使用技巧
+- **Clothing Object**: The garment mesh to be fitted
+- **Body Object**: The character body mesh
+- **Soft Range**: Influence radius determining how far selected vertices will affect surrounding geometry
+- **Falloff Type**: Type of influence falloff (linear, quadratic, exponential, etc. - cosine recommended for smoothest results)
+- **Ideal Distance**: Target distance between clothing and body
+- **Projection Type**: Method to calculate projection
+  - **From Center**: Projects from center point (may cause collapse)
+  - **Vertex Normal**: Projects along vertex normals (automatically filters poor normals)
+  - **Nearest Point**: Finds nearest point on body mesh
+  - **Mixed Method**: Combines multiple projection methods (may cause collapse)
+- **Ray Offset**: Distance to offset ray start position along normal direction
 
-1. **分阶段适配**: 
-   - 先使用较大的 Soft Range 进行整体调整
-   - 再逐步减小 Soft Range 进行精细调整
+### Tips & Tricks
 
-2. **投影方法选择**:
-   - 大多数情况推荐使用 "Mixed Method"
-   - 对于腋窝、股沟等复杂区域，建议使用 "Vertex Normal" 方法
+1. **Multi-stage Fitting**: 
+   - Start with larger Soft Range for overall adjustments
+   - Gradually reduce Soft Range for fine-tuning
 
-3. **处理穿模**:
-   - 穿模经常会发生，不要怕，使用 "Fix Intersecting" 按钮修复穿模问题
-   - 如果想要手动修复，也可使用 "Select Intersecting" 按钮找出穿模顶点，他们在编辑模式中被对称选中，一次一小组。
+2. **Choosing Projection Methods**:
+   - "Mixed Method" works best for most cases
+   - Use "Vertex Normal" for complex areas like armpits and crotch
 
-4. **选择性调整**:
-   - 为了最佳性能和控制，选择少量关键参考点进行调整，而不是一次性选择大量顶点。
-   - 顶点越密集的部分越会被多次考虑，尽量保证选择的参考顶点均匀分布。
+3. **Handling Intersections**:
+   - Intersections are common - use "Fix Intersecting" to resolve them
+   - For manual fixes, use "Select Intersecting" to identify problematic vertices in Edit Mode
 
-## 局限性
+4. **Selective Adjustment**:
+   - For best performance and control, select few key reference points rather than many vertices
+   - Denser vertex selections will be considered multiple times - ensure reference vertices are evenly distributed
 
-- 当前实现方法比较原始，仅仅能够帮助模型师加速对于穿模和贴身的处理
-- 权重带动机制较慢，不适合同时处理上千个顶点
-- 某些特殊情况下可能仍需要手动调整
+## Limitations
 
-## 可能改进方向
+- Current implementation is basic and primarily helps speed up mesh intersection and fitting workflows
+- Weight propagation mechanism is slow and not suitable for thousands of vertices at once
+- Some special cases may still require manual adjustments
 
-- 通过拉普拉斯内插来改进变形处理
-- 优化权重计算提高处理速度
-- 增加更智能的穿模检测和修复算法
+## Potential Improvements
 
-## 结语
+- Improving deformation with Laplacian interpolation
+- Optimizing weight calculations for better performance
+- Developing more intelligent intersection detection and fixing algorithms
 
-- 这个工具，包括此read me大量使用了AI赋能
-- 这个工具是为加速衣服适配过程而创建的临时解决方案。期待有能人士正在开发的Unity内自动衣服适配工具的完成。
+## Additional Notes
+
+- This tool, including this README, was created with significant AI assistance
+- This is a temporary solution to accelerate clothing fitting. Looking forward to the completion of automatic clothing fitting tools for Unity being developed by talented individuals.
